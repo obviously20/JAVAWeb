@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tlias智能学习辅助系统</title>
+    <style>
+        /* 重置默认样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+
+        /* 顶栏样式 */
+        .header {
+          /* - flex是flexible Box的缩写，意为"弹性布局"。
+          采用flex布局的元素，称为Flex容器（container），它的所有子元素自动成为容器成员，称为Flex项目（item）。 */
+            display: flex;/* 弹性布局flex */
+             /* justify-content: space-between; */ /* 先两边贴边，再平分剩余空间 */
+            /* justify-content: flex-start;*/ /* 从头开始排列  */
+            /* justify-content: flex-end; */ /* 从尾开始排列 */
+            /* justify-content: center; */ /* 居中排列 */
+            /* justify-content: space-around; */ /* 两边留白，中间平分，平分剩余空间 */
+            justify-content: space-between; /* 两端对齐：左侧标题，右侧链接 */
+            align-items: center; /* 垂直居中 */
+            height: 60px;
+            padding: 0 20px;
+            background-color: #444242;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加轻微阴影增加层次感 */
+        }
+
+        /* 左侧标题样式 */
+        .header-title {
+            font-size: 24px; /* 加大字体 */
+            font-weight: bold; /* 加粗 */
+            color: white;
+            font-family: "楷体", "KaiTi", serif; /* 使用楷体字体 */
+        }
+
+        /* 右侧退出登录链接样式 */
+        .header-logout {
+            font-size: 14px;
+            color: white;
+            text-decoration: none; /* 去除下划线 */
+            cursor: pointer;
+        }
+
+        .header-logout:hover {
+            color: #ff4d4f; /* 鼠标悬停时变色 */
+        }
+
+
+
+         /* 搜索表单区域 */
+      .search-form {
+          display: flex;  
+           justify-content: space-around; /* 平分剩余空间 */
+          align-items: center;
+          padding: 20px;
+          background-color: #f9f9f9;
+      }
+
+      /* 表单控件样式 */
+      .search-form input[type="text"], .search-form select {
+          margin: 5px 10px;/* 间隔 */
+          padding: 5px 10px;/* 内边距 */
+          border: 1px solid #ccc;
+          border-radius: 4px;/* 圆角 */
+          width: 200px;/* 宽度 */
+      }
+
+      /* 按钮样式 */
+      .search-form button {
+          padding: 5px 15px;/* 内边距 */
+          margin-left: 10px;/* 左侧间隔 */
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;/* 鼠标悬停时变成小手 */
+      }
+
+      /* 清空按钮样式 */
+      .search-form button.clear {
+          background-color: #6c757d;
+      }
+
+
+
+
+
+
+      .table {
+         min-width: 100%; 
+         border-collapse: collapse;
+         margin: 0 20px;
+      }
+
+      /* 设置表格单元格边框 */
+      .table td, .table th { 
+        border: 1px solid #ddd; 
+        padding: 8px; 
+        text-align: center;
+      }
+      /* 表格头样式 */
+      .avatar { 
+        width: 50px; 
+        height: 50px; 
+        object-fit: cover; 
+        border-radius: 50%; 
+      }
+
+
+
+
+
+        /* 页脚版权区域 */
+    .footer {
+        background-color: #8f8c8c;
+        color: white;
+        text-align: center;/* 居中 */
+        padding: 20px 0;/* 内边距 */
+        margin-top: 30px;/* 添加顶部间距 */
+    }
+
+    .footer .company-name {
+        font-size: 1.1em;/* 字体大小 */
+        font-weight: bold;/* 加粗 */
+    }
+
+    .footer .copyright {
+        font-size: 0.9em;/* 字体大小 */
+    }
+
+
+
+      /* 设置整体居中 */
+      #container {
+        width: 70%;/* 设置内容区域的宽度为页面宽度的70% */
+        margin: 0 auto;/* 上下外边距为0，左右外边距自动，这样可以使内容区域水平居中 */
+      }
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <div id="container">
+      <!-- 第一部分：顶栏 -->
+    <header class="header">
+        <div class="header-title">Tlias智能学习辅助系统</div>
+        <a href="#" class="header-logout">退出登录</a>
+    </header>
+
+   <!-- form表单：
+     action: 表单数据提交的url地址
+     method: 提交方式
+         get: 默认，表单数据会出现在url后面，形式：/save?name=Tom&age=18
+             特点：
+                 1. 如果表单中包含了隐私数据，get方式并不安全，不推荐使用该方式.
+                 2. 在浏览器中get请求的大小是有限制的，不适合提交大数据量的表单.
+         post: 表单数据会在消息体/请求体中提交到服务器
+             特点：
+                 1. 安全.
+                 2. 请求大小没有限制
+     注意：表单项要想能够采集数据，必须得设置name属性，表示当前表单项的名字
+-->
+
+
+    <!-- 表单项标签
+  <input> 的type属性:text、password、radio、checkbox、file、date、
+  datetime-local, time, hidden, button, submit
+  <select>定义下拉列表
+  <textarea>定义文本域 -->
+
+    <!-- 搜索表单区域-->
+      <!-- 搜索表单区域 -->
+    <form class="search-form" action="/search" method="post">
+      <!-- 绑定id属性和for属性，点击标签也可以触发表单项的点击 -->
+      <div>
+        <label for="name">姓名:</label>
+      <input type="text" name="name" id="name" placeholder="请输入姓名" />
+      </div>
+      <div><label for="gender">性别:</label>
+      <select name="gender" id="gender">
+          <option value="">性别</option>
+          <option value="1">男</option>
+          <option value="2">女</option>
+      </select>
+    </div>
+      <div><label for="job">职位:</label>
+      <!-- 下拉列表前的默认提示选项，value值为空字符串，表示不选择任何职位 -->
+      <select name="job" id="job">
+          <option value="">职位</option>
+          <option value="1">班主任</option>
+          <option value="2">讲师</option>
+          <option value="3">学工主管</option>
+          <option value="4">教研主管</option>
+          <option value="5">咨询师</option>
+      </select></div>
+      <div>
+        <button type="submit">查询</button>
+      <button type="reset" class="clear">清空</button>
+      </div>
+    </form>
+
+    <!-- 表格单元格 -->
+     <table class="table table-striped table-bordered">
+      <!-- 表头：表头单元格 -->
+      <thead>
+          <tr>
+            <!-- tr表示表格行，th表示表头单元格，td表示表格数据单元格 -->
+              <th>姓名</th>
+              <th>性别</th>
+              <th>头像</th>
+              <th>职位</th>
+              <th>入职日期</th>
+              <th>最后操作时间</th>
+              <th>操作</th>
+          </tr>
+      </thead>
+      <!-- 表格主体：表格数据单元格 -->
+      <tbody>
+          <tr>
+              <td>令狐冲</td>
+              <td>男</td>
+              <td><img src="https://via.placeholder.com/50" alt="令狐冲" class="avatar"></td>
+              <td>讲师</td>
+              <td>2021-03-15</td>
+              <td>2023-07-30T12:00:00Z</td>
+              <td class="btn-group">
+                  <button>编辑</button>
+                  <button>删除</button>
+              </td>
+          </tr>
+          <tr>
+              <td>任盈盈</td>
+              <td>女</td>
+              <td><img src="https://via.placeholder.com/50" alt="任盈盈" class="avatar"></td>
+              <td>学工主管</td>
+              <td>2020-04-10</td>
+              <td>2023-07-29T15:00:00Z</td>
+              <td class="btn-group">
+                  <button>编辑</button>
+                  <button>删除</button>
+              </td>
+          </tr>
+          <tr>
+              <td>岳不群</td>
+              <td>男</td>
+              <td><img src="https://via.placeholder.com/50" alt="岳不群" class="avatar"></td>
+              <td>教研主管</td>
+              <td>2019-01-01</td>
+              <td>2023-07-30T10:00:00Z</td>
+              <td class="btn-group">
+                  <button>编辑</button>
+                  <button>删除</button>
+              </td>
+          </tr>
+          <tr>
+              <td>宁中则</td>
+              <td>女</td>
+              <td><img src="https://via.placeholder.com/50" alt="宁中则" class="avatar"></td>
+              <td>班主任</td>
+              <td>2018-06-01</td>
+              <td>2023-07-29T09:00:00Z</td>
+              <td class="btn-group">
+                  <button>编辑</button>
+                  <button>删除</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+
+
+
+   <!-- 页脚版权区域 -->
+  <footer class="footer">
+    <p class="company-name">江苏传智播客教育科技股份有限公司</p>
+    <p class="copyright">版权所有 Copyright 2006-2024 All Rights Reserved</p>
+  </footer>
+
+    </div>
+
+
+
+</body>
+</html>
