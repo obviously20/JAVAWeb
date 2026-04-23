@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件监听-事件绑定</title>
+</head>
+<body>
+  <!-- JS事件监听的语法: 
+  事件源.addEventListener('事件类型', 要执行的函数); -->
+
+  <!-- 在上述的语法中包含三个要素: 
+- 事件源: 哪个dom元素触发了事件, 要获取dom元素
+- 事件类型: 用什么方式触发, 比如: 鼠标单击 click, 鼠标经过 mouseover
+- 要执行的函数: 要做什么事 -->
+
+  <button id="btn1">点击</button>
+  <button id="btn2">点击2</button>
+
+  <script>
+    //事件源:就是前面获取的HTML中的DOM对象
+
+
+//     addEventListener 与 on事件 区别: 
+// - on方式会被覆盖，addEventListener 方式可以绑定多次，拥有更多特性，推荐使用 addEventListener . 
+
+    //.addEventListener 事件监听(推荐使用)：可以绑定多次事件监听，拥有更多特性
+    document.querySelector('#btn1').addEventListener('click', () => {
+      alert("这是第一个按钮的点击事件");
+    });
+
+    document.querySelector('#btn1').addEventListener('click', function() {
+      alert("这是第一个按钮的点击事件,绑定第二次");
+    });
+
+    //on事件监听：会被覆盖
+    document.querySelector('#btn2').onclick = function(){
+      alert("这是第二个按钮的点击事件");
+    }
+
+    document.querySelector('#btn2').onclick = function(){
+      alert("这是第二个按钮的点击事件,被覆盖了");
+    };
+
+
+  </script>
+
+
+
+</body>
+</html>

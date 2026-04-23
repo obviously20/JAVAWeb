@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue入门</title>
+</head>
+<body>
+  
+  <div id="app">
+    <!-- 然后在html中使用{{}}语法绑定数据到模板 -->
+     <!-- 将后端返回的数据绑定到模板中，显示在页面上 -->
+    <h1>{{msg}}</h1>
+    <h2>{{count}}</h2>
+  </div>
+
+  <script type="module">
+    //1.导入vue-es模块
+    import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+    //2.创建Vue实例对象
+    // createApp({data(){return{message:"请求服务端后，服务端返回的数据会赋值给msg"}}}).mount('选择器');
+    createApp({
+      data(){
+        return{
+          msg:"hello vue",
+          count:100
+        }
+      }
+    }).mount('#app');
+
+  </script>
+
+
+</body>
+</html>

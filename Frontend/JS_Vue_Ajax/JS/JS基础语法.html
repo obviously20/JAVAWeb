@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS基础语法</title>
+</head>
+<body>
+  <script>//（弱类型语言）
+    //定义：变量(let)/常量(const)
+    
+    // //定义一个变量
+    // let a = "hahaha";
+    // //以弹窗的方式输出变量a的值(使用频次较高)
+    // alert(a);
+    // a = "okok";
+    // alert(a);
+
+    // //定义一个常量
+    // const PI = 3.14;
+    // //写入浏览器控制台（使用频次较高）
+    // console.log(PI);
+    // //向HTML的body中写入内容
+    // document.write("PI的值为：" + PI);
+
+    //基本数据类型
+    // Number 数字
+    //String 字符串
+    //boolean 布尔值
+    //null 空值
+    //undefined 未定义
+    //原始数据类型
+    // alert(typeof 3); //number
+    // alert(typeof 3.14); //number
+
+    // alert(typeof "A"); //string
+    // alert(typeof 'Hello');//string
+    // alert(typeof `aaa`);//string
+
+    // alert(typeof 1); //number
+    // alert(typeof true); //boolean
+    // alert(typeof false);//boolean
+
+    // alert(typeof null); //object 
+
+    // var a ;
+    // alert(typeof a); //undefined
+
+
+    // //反引号模板字符串
+    // //一般用来拼接字符串
+    // let name = "张三";
+    // let age = 18;
+    // alert("你好，我是" + name + "，我今年" + age + "岁");
+    // //反引号模板字符串中可以嵌入变量
+    // alert(`你好，我是${name}，我今年${age}岁`);
+
+    // //函数：JS是弱类型语言，定义函数时，形参不需要指定类型，函数的返回值也不需要指定类型
+    // //具名函数
+    // function add(a,b){
+    //   return a + b;
+    // }
+    // console.log(add(1,2)); //3
+
+    // //匿名函数
+    // //2.1 函数表达式
+    // let add1 = function(a,b){
+    //   return a + b;
+    // }
+    // console.log(add1(10,20)); //30
+
+    // //2.2 箭头函数
+    // let add2 = (a,b) => {
+    //   return a + b;
+    // }
+    // console.log(add2(100,200)); //300
+
+    //自定义对象
+    // let girlFriend = {
+    //   name:"alins",
+    //   age:20,
+    //   sex:"女",
+    //   height:1.65,
+    //   cook:function(){
+    //     alert(`${this.name}正在做饭`);
+    //   }
+    // };
+
+
+    // let girlFriend = {
+    //   name:"alins",
+    //   age:20,
+    //   sex:"女",
+    //   height:1.65,
+    //   cook(){
+    //     alert(`${this.name}正在做饭`);
+    //   }
+    // };
+
+    //不能使用箭头函数定义对象的方法，因为箭头函数没有this指向
+
+    // //调用对象
+    // alert(girlFriend.name); //alins
+    // girlFriend.cook(); //alins正在做饭
+
+
+    // //json
+    // //将对象转换为json字符串
+    // //JSON.stringify()方法可以将一个JavaScript对象或值转换为一个JSON字符串
+    // alert(JSON.stringify(girlFriend));//{"name":"alins","age":20,"sex":"女","height":1.65}
+
+    // //将json字符串转换为对象
+    // //JSON.parse()方法将一个JSON字符串转换为对象
+    // let json = '{"name":"Anna","age":19,"sex":"女","height":1.62}';
+    // alert(JSON.parse(json).name);//Anna
+    // alert(JSON.parse(json).age);//19
+    // alert(JSON.parse(json).sex);//女
+    // alert(JSON.parse(json).height);//1.62
+
+
+    
+
+
+
+
+
+
+    
+  </script>
+</body>
+</html>
