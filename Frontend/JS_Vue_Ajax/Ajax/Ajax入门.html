@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax入门</title>
+</head>
+<body>
+  <button id="getBtn">get</button>
+  <button id="postBtn">post</button>
+
+  <!-- // 引入axios 库: https://unpkg.com/axios/dist/axios.min.js -->
+  <!-- 作用：简化Ajax请求 -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    // get请求
+    document.querySelector('#getBtn').addEventListener('click',function(){
+     axios({
+      // 请求地址(服务端接口地址)
+      url:'https://mock.apifox.cn/m1/3083103-0-default/emps/list',
+      // 请求方法
+      method:'get',
+     }).then(function(result){// 成功回调
+      console.log(result.data.data)
+     }).catch(function(error){// 失败回调
+      console.log(error)
+     })
+    })
+    
+
+    // post请求
+    document.querySelector('#postBtn').addEventListener('click',function(){
+     axios({
+      // 请求地址(服务端接口地址)
+      url:'https://mock.apifox.cn/m1/3083103-0-default/emps/update',
+      // 请求方法
+      method:'post',
+      // 请求参数（post才有）
+      data:{
+        "empName": "张三",
+        "gender": "1",
+      }
+     }).then(function(result){// 成功回调
+      console.log(result.data)
+     }).catch(function(error){// 失败回调
+      console.log(error)
+     })
+    })
+  </script>
+
+  
+</body>
+</html>

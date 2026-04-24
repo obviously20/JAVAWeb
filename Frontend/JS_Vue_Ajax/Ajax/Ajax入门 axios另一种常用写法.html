@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax入门 axios另一种常用写法</title>
+</head>
+
+<body>
+  <button id="getBtn">get</button>
+  <button id="postBtn">post</button>
+
+  <!-- // 引入axios 库: https://unpkg.com/axios/dist/axios.min.js -->
+  <!-- 作用：简化Ajax请求 -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    // get请求
+    document.querySelector('#getBtn').addEventListener('click', function () {
+      axios.get('https://mock.apifox.cn/m1/3083103-0-default/emps/list').then(function (result) {// 获取成功
+        console.log(result.data)
+      }).catch(function (error) {// 获取失败
+        console.log(error)
+      })
+    })
+
+
+    // post请求
+    document.querySelector('#postBtn').addEventListener('click', function () {
+      axios.post('https://mock.apifox.cn/m1/3083103-0-default/emps/update', {
+        "empName": "张三",
+        "gender": "1",
+      }).then(function (result) {// 成功回调
+        console.log(result.data)
+      }).catch(function (error) {// 失败回调
+        console.log(error)
+      })
+    })
+  </script>
+
+
+</body>
+
+</html>
