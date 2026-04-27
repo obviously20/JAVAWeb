@@ -14,4 +14,38 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- 引入依赖:在dependencies标签中引入依赖 -->
+    <dependencies>
+
+        <!-- 引入一个依赖：dependency标签 -->
+        <dependency>
+
+            <!-- 依赖的坐标：groupId:artifactId:version
+            groupId：组织名
+            artifactId：项目名
+            version：版本号 -->
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.1.4</version>
+
+<!--            依赖传递-->
+<!--            我们上面在pom.xml中配置了一项依赖，就是spring-context，-->
+<!--            但是我们通过右侧的maven面板可以看到，其实引入进来的依赖，并不是这一项，有非常多的依赖，都引入进来了-->
+<!--            所谓maven的依赖传递，指的就是如果在maven项目中，-->
+<!--            A 依赖了B，B依赖了C，C依赖了D，那么在A项目中，也会有C、D依赖，因为依赖会传递。-->
+<!--            那如果，传递下来的依赖，在项目开发中，我们确实不需要，-->
+<!--            此时，我们可以通过Maven中的排除依赖功能，来将这个依赖排除掉。&#45;&#45;<exclusion> </exclusions>-->
+
+            <!--排除依赖, 主动断开依赖的资源-->
+            <exclusions>
+                <exclusion>
+                    <groupId>io.micrometer</groupId>
+                    <artifactId>micrometer-observation</artifactId>
+                </exclusion>
+            </exclusions>
+
+        </dependency>
+
+    </dependencies>
+
 </project>
