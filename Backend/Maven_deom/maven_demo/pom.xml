@@ -14,4 +14,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.1</version>
+            <!-- 依赖范围：测试时使用 -->
+<!--            compile(默认):主程序:Y测试程序:Y 打包(运行):Y -->
+<!--            test: 主程序:N 测试程序:Y 打包(运行):N -->
+<!--            provided -->
+<!--            runtime -->
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 </project>
