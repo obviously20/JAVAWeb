@@ -1,4 +1,4 @@
-package com.obviously20.controller.Dao;
+package com.obviously20.Dao;
 
 import java.util.ArrayList;
 

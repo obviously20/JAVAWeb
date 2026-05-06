@@ -1,6 +1,6 @@
 package com.obviously20.service.impl;
 
-import com.obviously20.controller.Dao.UserDao;
+import com.obviously20.Dao.UserDao;
 import com.obviously20.pojo.User;
 import com.obviously20.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

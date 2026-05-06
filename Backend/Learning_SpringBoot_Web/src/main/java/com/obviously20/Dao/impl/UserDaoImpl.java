@@ -1,9 +1,7 @@
-package com.obviously20.controller.Dao.impl;
+package com.obviously20.Dao.impl;
 
 import cn.hutool.core.io.IoUtil;
-import com.obviously20.controller.Dao.UserDao;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
+import com.obviously20.Dao.UserDao;
 import org.springframework.stereotype.Repository;
 
 import java.io.InputStream;
