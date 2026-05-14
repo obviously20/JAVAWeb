@@ -1,0 +1,44 @@
+# application.properties进行属性的配置，而如果在项目中，我们需要配置大量的属性，采用properties配置文件这种 key=value 的配置形式，就会显得配置文件的层级结构不清晰，也比较臃肿。
+# 在项目开发中，我们推荐使用application.yml配置文件来配置信息，简洁、明了、以数据为中心。
+spring:
+  application:
+    # 应用名称
+    name: SpringBoot_Mybatis_demo
+
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/jdbc_learning
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 配置数据库连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+mybatis:
+  # 配置mybatis的xml映射文件（如果不按mybatis的默认规则，需要配置以下属性）
+  #mapper-locations: classpath:mapper/*.xml
+
+  # 配置mybatis日志配置
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+## 语法
+##      - 对象/Map集合
+#  user:
+#    name: zhangsan
+#    age: 18
+#    password: 123456
+#
+##      - 数组/List/Set集合
+#  hobby:
+#    - java
+#    - game
+#    - sport
+
+#  加载顺序（由低到高，后面的会覆盖前面的）：
+#  1. application.properties
+#  2. application.yml
+#  3. application-{profile}.properties
+#  4. application-{profile}.yml

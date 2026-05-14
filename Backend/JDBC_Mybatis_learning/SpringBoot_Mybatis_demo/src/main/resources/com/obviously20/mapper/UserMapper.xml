@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--XML映射文件的定义规则?-->
+<!--        a.XML文件名称与Mapper接口名称一致，并且放置在相同包下(同包同名)。-->
+<!--        b.XML文件的namespace属性为Mapper接口全限定名一致。-->
+<!--        c.XML文件中sql语句的id与Mapper 接口中的方法名一致。-->
+
+<!--        结论：使用Mybatis的注解，主要是来完成一些简单的增删改查功能。如果需要实现复杂的SQL功能，建议使用XML来配置映射语句。-->
+
+<!--namespace表示当前mapper接口的全限定名，用于在xml文件中引用方法（copy->copy reference） -->
+<mapper namespace="com.obviously20.mapper.UserMapper">
+    <!--id表示当前方法的名称，用于在xml文件中引用方法 -->
+    <!--resultType表示单条结果返回的映射类 -->
+    <select id="findAll" resultType="com.obviously20.pojo.User">
+        select * from user
+    </select>
+</mapper>
