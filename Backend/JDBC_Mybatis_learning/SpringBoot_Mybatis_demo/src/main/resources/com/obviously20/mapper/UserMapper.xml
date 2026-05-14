@@ -17,4 +17,10 @@
     <select id="findAll" resultType="com.obviously20.pojo.User">
         select * from user
     </select>
+
+<!--    //    update user set password = ? , name = ?, age = ? where id = ? ;-->
+    <update id="updateById" parameterType="com.obviously20.pojo.User">
+        update user set password = #{password}, name = #{name}, age = #{age} where id = #{id}
+    </update>
+
 </mapper>

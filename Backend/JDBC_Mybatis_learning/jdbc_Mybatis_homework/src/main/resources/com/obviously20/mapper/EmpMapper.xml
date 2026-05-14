@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--XML映射文件的定义规则?-->
+<!--        a.XML文件名称与Mapper接口名称一致，并且放置在相同包下(同包同名)。-->
+<!--        b.XML文件的namespace属性为Mapper接口全限定名一致。-->
+<!--        c.XML文件中sql语句的id与Mapper 接口中的方法名一致。-->
+
+<!--        结论：使用Mybatis的注解，主要是来完成一些简单的增删改查功能。如果需要实现复杂的SQL功能，建议使用XML来配置映射语句。-->
+
+<!--namespace表示当前mapper接口的全限定名，用于在xml文件中引用方法（copy->copy reference） -->
+<mapper namespace="com.obviously20.mapper.EmpMapper">
+    <!--id表示当前方法的名称，用于在xml文件中引用方法 -->
+    <!--resultType表示单条结果返回的映射类 -->
+    <select id="findByGenderAndJob" resultType="com.obviously20.pojo.emp">
+<!--        1. 查询所有的性别为男(gender 为 1)的 讲师 (job 为 2) , 并根据入职时间, 对员工进行升序排序-->
+        select * from emp where gender = #{gender} and job = #{job} order by entry_date
+    </select>
+
+    <select id="findByEntryDateAndIdDesc" resultType="com.obviously20.pojo.emp">
+<!--        2. 根据 入职时间 对公司的员工进行 升序排序 ， 入职时间相同 , 再按照 ID 进行降序排序-->
+        select * from emp order by entry_date, id desc
+    </select>
+
+    <select id="findByGenderAndSalary" resultType="com.obviously20.pojo.emp">
+<!--        3. 查询性别为男(gender 为 1) 且 薪资大于 6000 的员工, 并根据 入职时间 对公司的员工进行 升序排序 ， 入职时间相同 , 再按照 ID 进行降序排序-->
+        select * from emp where gender = #{gender} and salary > #{salary} order by entry_date, id desc
+    </select>
+
+    <select id="findByGenderAndEntryDate" resultType="com.obviously20.pojo.emp">
+<!--        4. 查询性别为男(gender 为 1) 且 入职时间在 2023-01-01 到 2023-01-31 之间的员工, 并根据 入职时间 对公司的员工进行 升序排序 ， 入职时间相同 , 再按照 ID 进行降序排序-->
+            select * from emp where gender = #{gender} and entry_date between #{startDate} and #{endDate} order by entry_date, id desc
+    </select>
+
+    <select id="findByNameAndEntryDate" resultType="com.obviously20.pojo.emp">
+<!--        5. 查询姓 '阮' 且 在 '2010-10-01' 之后入职的员工, 并根据入职时间进行升序排序, 并对结果分页操作, 展示第1页员工数据, 每页展示5条记录-->
+<!--        &lt;!&ndash; 错误写法 &ndash;&gt;-->
+<!--        name like '#{surname}%'-->
+<!--        问题原因： MyBatis 的参数占位符 #{} 不能放在引号内，否则会被当作普通字符串处理，而不是参数绑定。-->
+
+<!--        修复方案： 使用 MySQL 的 concat() 函数进行字符串拼接：-->
+        <!-- 包含查询：name like '%关键词%' -->
+<!--        name like concat('%', #{keyword}, '%')-->
+        select * from emp where name like concat(#{surname}, '%') and entry_date > #{startDate} order by entry_date limit #{pageIndex},#{pageNum}
+    </select>
+
+    <insert id="insert" parameterType="com.obviously20.pojo.emp">
+        insert into emp(id,username,password,name,gender,phone,job,salary,image,entry_date,create_time,update_time)
+        values (#{id},#{username},#{password},#{name},#{gender},#{phone},#{job},#{salary},#{image},#{entry_date},#{create_time},#{update_time})
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from emp where id = #{id}
+    </delete>
+
+    <update id="updatePasswordByIdAndUsername" parameterType="com.obviously20.pojo.emp">
+        update emp set password = #{password}, update_time = #{update_time} where id = #{id} and username = #{username}
+    </update>
+
+
+</mapper>

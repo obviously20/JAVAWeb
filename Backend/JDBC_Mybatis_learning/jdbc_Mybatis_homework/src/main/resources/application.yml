@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: jdbc_Mybatis_homework
+
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_homework
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+

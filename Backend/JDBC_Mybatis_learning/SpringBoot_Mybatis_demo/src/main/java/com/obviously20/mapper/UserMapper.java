@@ -61,4 +61,7 @@ public interface UserMapper {
     //基于官方骨架创建的springboot项目中，接口编译时会保留方法形参名，@Param注解可以省略 (#{形参名})。
 
 
+//    update user set password = ? , name = ?, age = ? where id = ? ;
+    public Integer updateById(@Param("password") String password, @Param("name") String name,@Param("age") Integer age, @Param("id") Integer id);
+
 }

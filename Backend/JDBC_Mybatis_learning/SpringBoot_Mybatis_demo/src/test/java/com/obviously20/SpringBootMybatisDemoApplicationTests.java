@@ -34,17 +34,23 @@ class SpringBootMybatisDemoApplicationTests {
 //	}
 
 
-	@Test
-	public void testUpdate() {
-		User user = new User(4,"guanyu","654321","关羽",33);
-		Integer rows = userMapper.update(user);
-		System.out.println(rows);
-	}
+//	@Test
+//	public void testUpdate() {
+//		User user = new User(4,"guanyu","654321","关羽",33);
+//		Integer rows = userMapper.update(user);
+//		System.out.println(rows);
+//	}
 
 	@Test
 	public void testFindByNameAndPassword() {
 		User user = userMapper.findByNameAndPassword("关羽","654321");
 		System.out.println(user);
+	}
+
+	@Test
+	public void testUpdateById() {
+		Integer rows = userMapper.updateById("66888","关羽",32,4);
+		System.out.println(rows);
 	}
 
 }
