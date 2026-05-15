@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: tlias_web_management
+    # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/tlias
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#      # 配置数据库连接池（不配置用默认的）
+#      type: com.alibaba.druid.pool.DruidDataSource
+
+
+mybatis:
+  # 配置mybatis的xml映射文件（如果不按mybatis的默认规则，需要配置以下属性）
+  #mapper-locations: classpath:mapper/*.xml
+
+  # 配置mybatis日志配置
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
