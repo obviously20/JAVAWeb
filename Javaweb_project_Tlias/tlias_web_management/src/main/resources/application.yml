@@ -18,4 +18,9 @@ mybatis:
   # 配置mybatis日志配置
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 配置mybatis开启驼峰命名(推荐)
+#    驼峰命名规则：   abc_xyz    =>   abcXyz
+#    - 表中字段名：abc_xyz
+#    - 类中属性名：abcXyz
+    map-underscore-to-camel-case: true
 
