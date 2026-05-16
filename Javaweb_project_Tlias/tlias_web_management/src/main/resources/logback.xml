@@ -27,6 +27,7 @@
     </appender>
 
     <!-- 日志输出级别 -->
+<!--    level="INFO":表示只输出INFO级别及以上的日志消息-->
     <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
