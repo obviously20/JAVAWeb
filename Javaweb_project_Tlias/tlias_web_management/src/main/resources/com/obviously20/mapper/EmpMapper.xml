@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.obviously20.mapper.EmpMapper">
+<!--    <select id="list" resultType="com.obviously20.pojo.Emp">-->
+<!--        select emp.*,dept.name as deptName from emp left join dept on emp.dept_id = dept.id-->
+<!--        where emp.name like concat('%',#{name},'%') and-->
+<!--        emp.gender = #{gender} and-->
+<!--        emp.entry_date between #{begin} and #{end}-->
+<!--        order by emp.update_time desc-->
+<!--    </select>-->
+
+<!--    todo 优化2：动态SQl:上面的语句写死了：必须都输入，才能查询到结果，不是必须都输入，而是根据用户输入的查询参数，动态拼接SQL语句-->
+<!--        <where></where>:动态SQL语句的where标签，根据查询条件，来生成where关键字，并会自动去除条件前面多余的and或or。-->
+<!--        <if></if>:判断条件是否成立，如果条件为true，则拼接SQL。-->
+    <select id="list" resultType="com.obviously20.pojo.Emp">
+        select emp.*,dept.name as deptName from emp left join dept on emp.dept_id = dept.id
+        <where>
+            <if test="name != null and name != ''">
+                and emp.name like concat('%',#{name},'%')
+            </if>
+            <if test="gender != null">
+                and emp.gender = #{gender}
+            </if>
+            <if test="begin != null and end != null">
+                and emp.entry_date between #{begin} and #{end}
+            </if>
+        </where>
+        order by emp.update_time desc
+    </select>
+
+</mapper>

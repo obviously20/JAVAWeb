@@ -417,6 +417,31 @@ select dept_id,max(salary) from emp group by dept_id;
 -- 对应的部门和工资相同的员工信息(联合上面表子查询的临时表来)
 select * from emp e , (select dept_id,max(salary) max_sal from emp group by dept_id) as a where salary=a.max_sal and e.dept_id=a.dept_id;
 
+-- 需求:
+-- 1. 查询 "教研部" 性别为 男，且在 "2011-05-01" 之后入职的员工信息 。
+select id from dept where name='教研部';
+select * from emp where dept_id=(select id from dept where name='教研部') and gender=1 and entry_date>'2011-05-01';
+# select e.* from emp as e , dept as d where e.dept_id = d.id and d.name = '教研部' and e.gender = 1 and e.entry_date > '2011-05-01';
+
+-- 2. 查询工资 低于公司平均工资的 且 性别为男 的员工信息 。
+select avg(emp.salary) from emp;
+select * from emp where salary<(select avg(emp.salary) from emp) and gender=1;
+
+-- 3. 查询部门人数超过 10 人的部门名称 。
+select dept_id,count(*) from emp group by dept_id;
+select l.dept_id,d.name,l.peo_num from dept d,(select dept_id,count(*) peo_num from emp group by dept_id) l where d.id=l.dept_id and l.peo_num>10;
+# select d.name , count(*) from emp as e , dept as d where e.dept_id = d.id group by d.name having count(*) > 10;
+
+-- 4. 查询在 "2010-05-01" 后入职，且薪资高于 10000 的 "教研部" 员工信息，并根据薪资倒序排序。
+select id from dept where name='教研部';
+select * from emp where salary>10000 and entry_date>'2010-05-01' and dept_id=(select id from dept where name='教研部') order by salary desc ;
+# select * from emp e , dept d where e.dept_id = d.id and e.entry_date > '2010-05-01' and e.salary > 10000 and d.name = '教研部' order by e.salary desc;
+
+-- 5. 查询工资 低于本部门平均工资的员工信息 。
+select dept_id,avg(emp.salary) from emp group by dept_id;
+select * from emp e,(select dept_id,avg(emp.salary) dept_avg from emp group by dept_id) l where e.dept_id=l.dept_id and e.salary<l.dept_avg;
+# select e.* from emp e , (select dept_id, avg(salary) avg_sal from emp group by dept_id) as a
+#           where e.dept_id = a.dept_id and e.salary < a.avg_sal;
 
 
 
