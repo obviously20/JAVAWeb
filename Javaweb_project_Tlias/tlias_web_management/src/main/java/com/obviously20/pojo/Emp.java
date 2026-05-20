@@ -28,4 +28,6 @@ public class Emp {
 
     //关联的部门名称
     private String deptName;
+    //关联工作经历列表
+    private List<EmpExpr> exprList;
 }

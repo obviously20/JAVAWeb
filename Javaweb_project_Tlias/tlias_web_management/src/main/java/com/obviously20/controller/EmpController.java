@@ -8,10 +8,7 @@ import com.obviously20.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -50,6 +47,17 @@ public class EmpController {
         log.info("page:{},pageSize:{}", empQueryParam.getPage(), empQueryParam.getPageSize());//输出请求参数
         PageResult<Emp> pageResult = empService.page(empQueryParam);
         return Result.success(pageResult);
+    }
+
+
+    /**
+     * 添加员工
+     * */
+    @PostMapping
+    public Result save(@RequestBody Emp emp) {
+        log.info("添加员工save:{}", emp);
+        empService.save(emp);
+        return Result.success();
     }
 
 }
