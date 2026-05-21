@@ -104,7 +104,7 @@ public class EmpServiceImpl implements EmpService {
             //执行插入操作
             empMapper.insert(emp);
 
-            int i = 1/0;
+//            int i = 1/0;
 
             //2.保存员工的工作经历信息
             Integer empId = emp.getId();
