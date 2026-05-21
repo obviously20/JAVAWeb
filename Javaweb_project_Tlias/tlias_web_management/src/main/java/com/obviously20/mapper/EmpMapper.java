@@ -4,6 +4,7 @@ import com.obviously20.pojo.Emp;
 import com.obviously20.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDate;
@@ -38,6 +39,12 @@ public interface EmpMapper {
     /**
      * 添加员工
      * */
+    //@Options(useGeneratedKeys = true, keyProperty = "id"): 自动获取主键值
+    //todo 主键返回：@Options(useGeneratedKeys = true, keyProperty = "id")
+    //  useGeneratedKeys: 是否自动获取主键值，默认值为false，即不自动获取主键值
+    //  keyProperty: 主键值的属性名，默认值为null，即不自动获取主键值
+    //  由于稍后，我们在保存工作经历信息的时候，需要记录是哪位员工的工作经历。 所以，保存完员工信息之后，是需要获取到员工的ID的，那这里就需要通过Mybatis中提供的主键返回功能来获取。
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert("insert into emp(username,name,gender,phone,job,salary,image,entry_date,dept_id,create_time,update_time) " +
             "values(#{username},#{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
     void insert(Emp emp);

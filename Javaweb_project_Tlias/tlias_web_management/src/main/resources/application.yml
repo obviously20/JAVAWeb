@@ -11,6 +11,14 @@ spring:
 #      type: com.alibaba.druid.pool.DruidDataSource
 
 
+  servlet:
+    multipart:
+      # 配置上传文件的最大大小（单个文件大小）
+      max-file-size: 10MB
+      # 配置上传文件的最大请求大小（总上传文件大小不能超过该值）
+      max-request-size: 100MB
+
+
 mybatis:
   # 配置mybatis的xml映射文件（如果不按mybatis的默认规则，需要配置以下属性）
   #mapper-locations: classpath:mapper/*.xml
@@ -24,3 +32,7 @@ mybatis:
 #    - 类中属性名：abcXyz
     map-underscore-to-camel-case: true
 
+#spring事务管理日志
+logging:
+  level:
+    org.springframework.jdbc.support.JdbcTransactionManager: debug

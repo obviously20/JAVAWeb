@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传文件</title>
+</head>
+<body>
+
+<!--    文件上传三要素：-->
+<!--    - 表单标签：input type="file"：上传文件的输入框-->
+<!--    - 表单属性：enctype="multipart/form-data"：指定表单数据的编码类型为multipart/form-data（这样才能上传文件，不指定的话只会上传文件名，不会上传文件内容）-->
+<!--    - 表单方法：post-->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        姓名: <input type="text" name="name"><br>
+        年龄: <input type="text" name="age"><br>
+        头像: <input type="file" name="file"><br>
+        <input type="submit" value="提交">
+    </form>
+
+</body>
+</html>

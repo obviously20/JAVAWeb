@@ -2,23 +2,34 @@ package com.obviously20.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.obviously20.mapper.EmpExprMapper;
 import com.obviously20.mapper.EmpMapper;
-import com.obviously20.pojo.Emp;
-import com.obviously20.pojo.EmpQueryParam;
-import com.obviously20.pojo.PageResult;
+import com.obviously20.pojo.*;
+import com.obviously20.service.EmpLogService;
 import com.obviously20.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+
+
 
 @Service
 public class EmpServiceImpl implements EmpService {
 
     @Autowired
     private EmpMapper empMapper;
+
+    @Autowired
+    private EmpExprMapper empExprMapper;
+
+    @Autowired
+    private EmpLogService empLogService;
 
 //    @Override
 //    public PageResult<Emp> page(Integer pageNum, Integer pageSize) {
@@ -73,16 +84,44 @@ public class EmpServiceImpl implements EmpService {
         return new PageResult<Emp>(p.getTotal(),p.getResult());
     }
 
+    //todo @Transactional:就是在当前这个方法执行开始之前来开启事务，方法执行完毕之后提交事务。如果在这个方法执行的过程当中出现了异常，就会进行事务的回滚操作。
+    //位置：业务层的方法上、类上、接口上
+    //  - 方法上：当前方法交给spring进行事务管理(如果一个方法中包含了多个数据库操作，那么就建议在方法上添加@Transactional注解，来开启事务)
+    //  - 类上：当前类中所有的方法都交由spring进行事务管理
+    //  - 接口上：接口下所有的实现类当中所有的方法都交给spring 进行事务管理
+
+    //todo rollbackFor:指定在哪些异常出现时，才会进行事务的回滚操作。默认值是RuntimeException.class(运行时异常)
+    // 注意：如果在方法中出现了非运行时异常，那么就不会进行事务的回滚操作。
+    // 所以，设置rollbackFor = {Exception.class}，就可以在方法中出现任何异常时，都进行事务的回滚操作。
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public void save(Emp emp) {
-        //1.保存员工基本信息
-        //设置创建时间和修改时间为当前时间
-        emp.setCreateTime(LocalDateTime.now());
-        emp.setUpdateTime(LocalDateTime.now());
-        //执行插入操作
-        empMapper.insert(emp);
-        //2.保存员工的工作经历信息
+        try {
+            //1.保存员工基本信息
+            //设置创建时间和修改时间为当前时间
+            emp.setCreateTime(LocalDateTime.now());
+            emp.setUpdateTime(LocalDateTime.now());
+            //执行插入操作
+            empMapper.insert(emp);
 
+            int i = 1/0;
+
+            //2.保存员工的工作经历信息
+            Integer empId = emp.getId();
+            //先获取员工的工作经历信息
+            List<EmpExpr> exprList = emp.getExprList();
+            //看获取到的工作经历信息是否为空
+            if(!CollectionUtils.isEmpty(exprList)){
+                //遍历工作经历列表，将每个工作经历的员工ID设置为当前员工的ID
+                exprList.forEach(expr -> expr.setEmpId(empId));
+                //执行插入操作
+                empExprMapper.insertBatch(exprList);
+            }
+        } finally {
+            //记录操作日志
+            EmpLog empLog = new EmpLog(null, LocalDateTime.now(), emp.toString());
+            empLogService.insertLog(empLog);
+        }
     }
 
 }
