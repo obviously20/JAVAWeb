@@ -2,6 +2,7 @@ package com.obviously20.service;
 
 import com.obviously20.pojo.Emp;
 import com.obviously20.pojo.EmpQueryParam;
+import com.obviously20.pojo.EmpVo;
 import com.obviously20.pojo.PageResult;
 
 import java.time.LocalDate;
@@ -20,4 +21,9 @@ public interface EmpService {
      * 添加员工
      * */
     void save(Emp emp);
+
+    /**
+     * 查询全部员工
+     * */
+    List<EmpVo> list();
 }

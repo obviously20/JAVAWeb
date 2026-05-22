@@ -2,6 +2,7 @@ package com.obviously20.mapper;
 
 import com.obviously20.pojo.Emp;
 import com.obviously20.pojo.EmpQueryParam;
+import com.obviously20.pojo.EmpVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -48,4 +49,11 @@ public interface EmpMapper {
     @Insert("insert into emp(username,name,gender,phone,job,salary,image,entry_date,dept_id,create_time,update_time) " +
             "values(#{username},#{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
     void insert(Emp emp);
+
+
+    /**
+     * 查询全部员工
+     * */
+    @Select("select id,username,password,name,gender,image,job,salary,entry_date,dept_id,create_time,update_time from emp")
+    List<EmpVo> selectList();
 }

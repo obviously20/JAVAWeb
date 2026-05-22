@@ -1,9 +1,6 @@
 package com.obviously20.controller;
 
-import com.obviously20.pojo.Emp;
-import com.obviously20.pojo.EmpQueryParam;
-import com.obviously20.pojo.PageResult;
-import com.obviously20.pojo.Result;
+import com.obviously20.pojo.*;
 import com.obviously20.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +56,18 @@ public class EmpController {
         empService.save(emp);
         return Result.success();
     }
+
+
+    /**
+     * 查询全部员工
+     * */
+    @GetMapping("/list")
+    public Result list(){
+        log.info("查询全部员工list");
+        List<EmpVo> emps = empService.list();
+        return Result.success(emps);
+    }
+
+
 
 }

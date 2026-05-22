@@ -13,4 +13,22 @@
         SELECT * FROM clazz
     </select>
 
+    <select id="selectClazz" resultType="com.obviously20.pojo.Clazz">
+        select c.*, e.name as master_name from clazz c left join emp e on c.master_id = e.id
+        <where>
+            <if test="name != null">
+                and c.name like concat('%', #{name}, '%')
+            </if>
+            <if test="begin !=null and end !=null">
+                and c.begin_date between #{begin} and #{end}
+            </if>
+        </where>
+        order by c.update_time desc
+    </select>
+
+    <update id="update" parameterType="com.obviously20.pojo.Clazz">
+        update clazz set name = #{name}, room = #{room}, begin_date = #{beginDate}, end_date = #{endDate}, master_id = #{masterId}, subject = #{subject}, update_time = #{updateTime} where id = #{id}
+    </update>
+
+
 </mapper>

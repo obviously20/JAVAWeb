@@ -124,4 +124,12 @@ public class EmpServiceImpl implements EmpService {
         }
     }
 
+    /**
+     * 查询所有员工:该方法用于查询所有员工信息
+     * */
+    @Override
+    public List<EmpVo> list() {
+        return empMapper.selectList();
+    }
+
 }
