@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -130,6 +131,47 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public List<EmpVo> list() {
         return empMapper.selectList();
+    }
+
+
+    /**
+     * 批量删除员工（根据id列表）
+     * */
+    @Override
+    public void delete(List<Integer> ids) {
+        //1.删除员工基本信息
+        empMapper.deleteByIds(ids);
+        //2.删除员工的工作经历信息
+        empExprMapper.deleteByEmpIds(ids);
+    }
+
+    /**
+     * 根据id查询员工详情
+     * */
+    @Override
+    public Emp selectById(Integer id) {
+        return empMapper.selectById(id);
+    }
+
+    /**
+     * 修改员工
+     * */
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public void update(Emp emp) {
+        //1.更新员工基本信息
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.updateById(emp);
+
+        //2.更新员工的工作经历信息(先删除再插入)
+        //先删除员工的工作经历信息
+        empExprMapper.deleteByEmpIds(Arrays.asList(emp.getId()));
+        //再插入员工的工作经历信息
+        List<EmpExpr> exprList = emp.getExprList();
+        if(!CollectionUtils.isEmpty(exprList)){
+            exprList.forEach(expr -> expr.setEmpId(emp.getId()));
+            empExprMapper.insertBatch(exprList);
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.obviously20.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.obviously20.exception.BusinessException;
 import com.obviously20.mapper.ClazzMapper;
 import com.obviously20.pojo.Clazz;
 import com.obviously20.pojo.ClazzQueryParam;
@@ -75,7 +76,7 @@ public class ClazzServiceImpl implements ClazzService {
         //1.先判断班级中是否还有学生
         Integer studentCount = clazzMapper.selectStudentCount(id);
         if (studentCount > 0) {
-            throw new RuntimeException("班级中还有学生，不能删除");
+            throw new BusinessException("班级中还有学生，不能删除");
         }
 
         //2.到这里,说明班级中没有学生,可以删除班级信息

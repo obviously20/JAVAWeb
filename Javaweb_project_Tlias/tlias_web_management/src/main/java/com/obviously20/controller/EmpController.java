@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -66,6 +67,44 @@ public class EmpController {
         log.info("查询全部员工list");
         List<EmpVo> emps = empService.list();
         return Result.success(emps);
+    }
+
+    /**
+     * 批量删除员工（根据id列表）：且单个删除员工是批量删除的一种特殊情况
+     * */
+//    //用数组接受id列表
+//    @DeleteMapping
+//    public Result delete(Integer[] ids){
+//        log.info("批量删除员工delete:{}", Arrays.toString(ids));
+//        return Result.success();
+//    }
+
+    //todo 但为了更好的操作数据，企业一般会使用List<Integer>来接收id列表
+    @DeleteMapping
+    public Result delete(@RequestParam List<Integer> ids){
+        log.info("批量删除员工delete:{}", ids);
+        empService.delete(ids);
+        return Result.success();
+    }
+
+    /**
+     * 根据id查询员工详情
+     * */
+    @GetMapping("/{id}")
+    public Result select(@PathVariable Integer id) {
+        log.info("根据id查询员工详情select:{}", id);
+        Emp emp = empService.selectById(id);
+        return Result.success(emp);
+    }
+
+    /**
+     * 修改员工
+     * */
+    @PutMapping
+    public Result update(@RequestBody Emp emp) {
+        log.info("修改员工update:{}", emp);
+        empService.update(emp);
+        return Result.success();
     }
 
 

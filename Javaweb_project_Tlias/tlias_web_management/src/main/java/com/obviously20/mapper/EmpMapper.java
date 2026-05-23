@@ -3,13 +3,11 @@ package com.obviously20.mapper;
 import com.obviously20.pojo.Emp;
 import com.obviously20.pojo.EmpQueryParam;
 import com.obviously20.pojo.EmpVo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface EmpMapper {
@@ -56,4 +54,32 @@ public interface EmpMapper {
      * */
     @Select("select id,username,password,name,gender,image,job,salary,entry_date,dept_id,create_time,update_time from emp")
     List<EmpVo> selectList();
+
+
+    /**
+     * 批量删除员工（根据id列表）
+     * */
+    void deleteByIds(List<Integer> ids);
+
+    /**
+     * 根据id查询员工详情
+     * */
+    Emp selectById(Integer id);
+
+    /**
+     * 更新员工基本信息
+     * */
+    void updateById(Emp emp);
+
+    /**
+     * 员工职位人数统计
+     * */
+    @MapKey("pos")
+    List<Map<String,Object>> countPosNum();
+
+    /**
+     * 员工性别人数统计
+     * */
+    @MapKey("name")
+    List<Map> countGenderNum();
 }
