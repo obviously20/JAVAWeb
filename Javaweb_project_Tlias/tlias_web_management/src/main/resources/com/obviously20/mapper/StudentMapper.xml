@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.obviously20.mapper.StudentMapper">
+
+    <!-- 修改学员 -->
+    <update id="update">
+        update student
+        <set>
+            <if test="name !=null">name = #{name},</if>
+            <if test="no !=null">no = #{no},</if>
+            <if test="gender !=null">gender = #{gender},</if>
+            <if test="phone !=null">phone = #{phone},</if>
+            <if test="degree !=null">degree = #{degree},</if>
+            <if test="idCard !=null">id_card = #{idCard},</if>
+            <if test="isCollege !=null">is_college = #{isCollege},</if>
+            <if test="address !=null">address = #{address},</if>
+            <if test="graduationDate !=null">graduation_date = #{graduationDate},</if>
+            <if test="violationCount !=null">violation_count = #{violationCount},</if>
+            <if test="violationScore !=null">violation_score = #{violationScore},</if>
+            <if test="clazzId !=null">clazz_id = #{clazzId},</if>
+            <if test="updateTime !=null">update_time = #{updateTime},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 违纪处理 -->
+    <update id="violation">
+        update student
+        <set>
+            <if test="score !=null"> violation_count = violation_count + 1,</if>
+            <if test="score !=null">violation_score = violation_score + #{score},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 分页查询学生 -->
+    <select id="select" resultType="com.obviously20.pojo.Student">
+        select s.*, c.name as clazz_name from student s join clazz c on s.clazz_id = c.id
+        <where>
+            <if test="name !=null and name !='' ">and s.name like concat('%',#{name},'%') </if>
+            <if test="degree !=null">and s.degree = #{degree} </if>
+            <if test="clazzId !=null">and s.clazz_id = #{clazzId} </if>
+        </where>
+        order by s.update_time desc
+    </select>
+
+    <!-- 统计学员学历 -->
+    <select id="countDegreeNum" resultType="java.util.Map">
+        select
+        (case when degree='1' then '初中' when degree='2' then '高中'
+            when degree='3' then '大专' when degree='4' then '本科'
+            when degree='5' then '硕士' when degree='6' then '博士'
+            else '其他' end) as name ,
+        count(*) as value
+        from student group by degree;
+    </select>
+
+    <!-- 统计班级人数 -->
+    <select id="countClazzNum" resultType="java.util.Map">
+<!--        select c.name clazz ,count(s.id) num  from student s right join clazz c on s.clazz_id=c.id group by c.id,c.name order by c.id-->
+        SELECT
+        c.name AS clazz,
+        COUNT(s.id) AS num
+        FROM clazz c
+        LEFT JOIN student s ON c.id = s.clazz_id
+        GROUP BY c.id, c.name
+<!--        &#45;&#45; 关键：按班级名称排序，和你接口返回的顺序一致-->
+        ORDER BY c.name;
+    </select>
+
+    <!-- 删除学员 -->
+    <delete id="delete" parameterType="java.util.List">
+        delete from student where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+        </foreach>
+    </delete>
+
+    <!-- 添加学员 -->
+<!--   todo  MyBatis的 <trim> 标签来确保字段和值的列表始终匹配-->
+    <insert id="insert" parameterType="com.obviously20.pojo.Student">
+        insert into student
+            (name, no, gender, phone, degree,
+                <if test="idCard !=null" >id_card,</if>
+                <if test="isCollege !=null" >is_college,</if>
+                <if test="address !=null" >address,</if>
+                <if test="graduationDate !=null" >graduation_date,</if>
+            clazz_id, create_time, update_time)
+        VALUES
+            (#{name}, #{no}, #{gender}, #{phone}, #{degree},
+                <if test="idCard !=null" >#{idCard},</if>
+                <if test="isCollege !=null" >#{isCollege},</if>
+                <if test="address !=null" >#{address},</if>
+                <if test="graduationDate !=null" >#{graduationDate},</if>
+            #{clazzId}, #{createTime}, #{updateTime})
+
+<!--        insert into student-->
+<!--        <trim prefix="(" suffix=")" suffixOverrides=",">-->
+<!--            <if test="name != null">name,</if>-->
+<!--            <if test="no != null">no,</if>-->
+<!--            <if test="gender != null">gender,</if>-->
+<!--            <if test="phone != null">phone,</if>-->
+<!--            <if test="degree != null">degree,</if>-->
+<!--            <if test="idCard != null">id_card,</if>-->
+<!--            <if test="isCollege != null">is_college,</if>-->
+<!--            <if test="address != null">address,</if>-->
+<!--            <if test="graduationDate != null">graduation_date,</if>-->
+<!--            <if test="clazzId != null">clazz_id,</if>-->
+<!--            <if test="createTime != null">create_time,</if>-->
+<!--            <if test="updateTime != null">update_time,</if>-->
+<!--        </trim>-->
+<!--        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">-->
+<!--            <if test="name != null">#{name},</if>-->
+<!--            <if test="no != null">#{no},</if>-->
+<!--            <if test="gender != null">#{gender},</if>-->
+<!--            <if test="phone != null">#{phone},</if>-->
+<!--            <if test="degree != null">#{degree},</if>-->
+<!--            <if test="idCard != null">#{idCard},</if>-->
+<!--            <if test="isCollege != null">#{isCollege},</if>-->
+<!--            <if test="address != null">#{address},</if>-->
+<!--            <if test="graduationDate != null">#{graduationDate},</if>-->
+<!--            <if test="clazzId != null">#{clazzId},</if>-->
+<!--            <if test="createTime != null">#{createTime},</if>-->
+<!--            <if test="updateTime != null">#{updateTime},</if>-->
+<!--        </trim>-->
+    </insert>
+
+</mapper>
