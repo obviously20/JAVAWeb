@@ -82,4 +82,10 @@ public interface EmpMapper {
      * */
     @MapKey("name")
     List<Map> countGenderNum();
+
+    /**
+     * 根据用户名和密码查询员工是否存在
+     * */
+    @Select("select id,username,name from emp where username = #{username} and password = #{password}")
+    Emp selectByUsernameAndPassword(Emp emp);
 }

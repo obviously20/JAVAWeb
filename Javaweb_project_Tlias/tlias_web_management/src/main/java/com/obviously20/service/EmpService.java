@@ -1,9 +1,6 @@
 package com.obviously20.service;
 
-import com.obviously20.pojo.Emp;
-import com.obviously20.pojo.EmpQueryParam;
-import com.obviously20.pojo.EmpVo;
-import com.obviously20.pojo.PageResult;
+import com.obviously20.pojo.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -42,4 +39,10 @@ public interface EmpService {
      * 修改员工
      * */
     void update(Emp emp);
+
+    /**
+     * 登录接口
+     * */
+    //登录验证方法
+    LoginInfo login(Emp emp);
 }

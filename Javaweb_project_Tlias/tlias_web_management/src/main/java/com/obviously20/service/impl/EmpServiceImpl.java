@@ -174,4 +174,22 @@ public class EmpServiceImpl implements EmpService {
         }
     }
 
+
+    /**
+     * 登录接口
+     * */
+    @Override
+    public LoginInfo login(Emp emp) {
+
+        //调用数据库查询员工是否存在
+        Emp loginEmp = empMapper.selectByUsernameAndPassword(emp);
+        //如果员工不为空，说明登录成功返回登录信息
+        if(loginEmp != null){
+            return new LoginInfo(loginEmp.getId(), loginEmp.getUsername(), loginEmp.getName(), "token");
+        }
+
+        //如果员工为空，说明登录失败，返回null
+        return null;
+    }
+
 }
