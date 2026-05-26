@@ -7,6 +7,7 @@ import com.obviously20.mapper.EmpMapper;
 import com.obviously20.pojo.*;
 import com.obviously20.service.EmpLogService;
 import com.obviously20.service.EmpService;
+import com.obviously20.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +15,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
+import java.util.*;
 
 
 @Service
@@ -31,6 +29,10 @@ public class EmpServiceImpl implements EmpService {
 
     @Autowired
     private EmpLogService empLogService;
+
+    // 直接注入
+    @Autowired
+    private JwtUtil jwtUtil;
 
 //    @Override
 //    public PageResult<Emp> page(Integer pageNum, Integer pageSize) {
@@ -185,7 +187,13 @@ public class EmpServiceImpl implements EmpService {
         Emp loginEmp = empMapper.selectByUsernameAndPassword(emp);
         //如果员工不为空，说明登录成功返回登录信息
         if(loginEmp != null){
-            return new LoginInfo(loginEmp.getId(), loginEmp.getUsername(), loginEmp.getName(), "token");
+            //先生成令牌的载荷
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("id", loginEmp.getId());
+            claims.put("username", loginEmp.getUsername());
+
+            //返回登录信息和令牌
+            return new LoginInfo(loginEmp.getId(), loginEmp.getUsername(), loginEmp.getName(), JwtUtil.generateToken("my_secret_key_that_is_at_least_32_bytes_long_for_security",claims));
         }
 
         //如果员工为空，说明登录失败，返回null
