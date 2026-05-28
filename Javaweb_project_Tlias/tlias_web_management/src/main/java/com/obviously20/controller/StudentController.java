@@ -1,5 +1,6 @@
 package com.obviously20.controller;
 
+import com.obviously20.anno.Log;
 import com.obviously20.pojo.PageResult;
 import com.obviously20.pojo.Result;
 import com.obviously20.pojo.Student;
@@ -36,6 +37,7 @@ public class StudentController {
     /**
      * 删除学员
      * */
+    @Log
     @DeleteMapping("/{ids}")
     public Result delete(@PathVariable String ids) {
         log.info("ids:{}", ids);
@@ -50,6 +52,7 @@ public class StudentController {
     /**
      * 添加学员
      * */
+    @Log
     @PostMapping
     public Result insert(@RequestBody Student student) {
         log.info("添加student:{}", student);
@@ -72,6 +75,7 @@ public class StudentController {
     /**
      * 修改学员
      **/
+    @Log
     @PutMapping
     public Result update(@RequestBody Student student) {
         log.info("修改学员信息:{}", student);
@@ -82,6 +86,7 @@ public class StudentController {
     /**
      * 违纪处理
      * */
+    @Log
     @PutMapping("/violation/{id}/{score}")
     public Result violation(@PathVariable Integer id, @PathVariable Integer score) {
         log.info("id:{},score:{}", id, score);

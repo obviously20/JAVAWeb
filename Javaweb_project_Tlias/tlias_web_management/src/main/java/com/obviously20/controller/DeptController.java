@@ -1,5 +1,6 @@
 package com.obviously20.controller;
 
+import com.obviously20.anno.Log;
 import com.obviously20.pojo.Dept;
 import com.obviously20.pojo.Result;
 import com.obviously20.service.DeptService;
@@ -70,6 +71,7 @@ public class DeptController {
     /*
      * 删除部门：根据id删除部门
      * */
+    @Log
     //todo 方法3（推荐）：如果请求参数名与形参变量名相同，直接定义方法形参即可接收。（省略@RequestParam）
 //    @DeleteMapping("/depts")
     @DeleteMapping
@@ -85,6 +87,7 @@ public class DeptController {
     /*
      * 添加部门
      * */
+    @Log
     //todo 当前端传递的参数为JSON格式时（一般为POST请求、PUT请求等），
     // 需要使用一个实例对象接收参数（要求前端传递的JSON格式参数（key值）与实例对象的属性名保持一致）
     // 并且需要使用RequestBody注解，将请求体中的JSON格式参数绑定到对应的实例对象中的属性上。
@@ -136,6 +139,7 @@ public class DeptController {
     /**
      * 修改部门数据
      * */
+    @Log
 //    @PutMapping("/depts")
     @PutMapping
     public Result deptUpdate(@RequestBody Dept dept){

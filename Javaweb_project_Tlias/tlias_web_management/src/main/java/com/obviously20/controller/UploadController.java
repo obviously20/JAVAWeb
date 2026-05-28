@@ -1,5 +1,6 @@
 package com.obviously20.controller;
 
+import com.obviously20.anno.Log;
 import com.obviously20.pojo.Result;
 import com.obviously20.utils.AliyunOSSOperator;
 import lombok.extern.slf4j.Slf4j;
@@ -64,6 +65,7 @@ public class UploadController {
     @Autowired
     private AliyunOSSOperator aliyunOSSOperator;
 
+    @Log
     @PostMapping("/upload")
     public Result upload(MultipartFile file) throws Exception {
         log.info("file: {}", file);

@@ -1,5 +1,6 @@
 package com.obviously20.interceptor;
 
+import com.obviously20.utils.CurrentHolder;
 import com.obviously20.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,6 +43,12 @@ public class TokenInterceptor implements HandlerInterceptor {
         try{
             Claims claims = JwtUtil.parseToken("my_secret_key_that_is_at_least_32_bytes_long_for_security", token);
             //说明token有效,需要放行
+
+            //从token中获取当前用户ID
+            Integer empId = Integer.valueOf(claims.get("id").toString());
+            //将当前用户ID设置到上下文(存入ThreadLocal：当前请求的线程的局部变量中)
+            CurrentHolder.setCurrentId(empId);
+
             log.info("token有效,需要放行");
             return true;
         }catch (Exception e){//如果令牌过期了/被篡改了，捕获异常，返回401状态码
@@ -50,4 +57,11 @@ public class TokenInterceptor implements HandlerInterceptor {
             return false;
         }
     }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        // 请求完成后清理ThreadLocal，防止内存泄漏
+        CurrentHolder.remove();
+    }
+
 }

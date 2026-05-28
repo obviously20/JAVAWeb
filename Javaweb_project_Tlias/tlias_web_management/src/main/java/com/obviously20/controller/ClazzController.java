@@ -1,5 +1,6 @@
 package com.obviously20.controller;
 
+import com.obviously20.anno.Log;
 import com.obviously20.pojo.Clazz;
 import com.obviously20.pojo.ClazzQueryParam;
 import com.obviously20.pojo.PageResult;
@@ -22,6 +23,7 @@ public class ClazzController {
     /**
      * 添加班级:该接口用于添加班级信息
      */
+    @Log
     @PostMapping
     public Result addClazz(@RequestBody Clazz clazz){
         log.info("添加班级信息:{}",clazz);
@@ -54,6 +56,7 @@ public class ClazzController {
     /**
      * 删除班级:该接口用于删除班级信息
      * */
+    @Log
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id){
         log.info("删除班级信息:{}",id);
@@ -74,6 +77,7 @@ public class ClazzController {
     /**
      * 修改班级信息
      * */
+    @Log
     @PutMapping
     public Result update(@RequestBody Clazz clazz){
         log.info("修改班级信息:{}",clazz);

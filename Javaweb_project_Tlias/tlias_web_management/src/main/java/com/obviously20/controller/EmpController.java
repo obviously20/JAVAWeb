@@ -1,5 +1,6 @@
 package com.obviously20.controller;
 
+import com.obviously20.anno.Log;
 import com.obviously20.pojo.*;
 import com.obviously20.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +52,7 @@ public class EmpController {
     /**
      * 添加员工
      * */
+    @Log
     @PostMapping
     public Result save(@RequestBody Emp emp) {
         log.info("添加员工save:{}", emp);
@@ -79,6 +81,7 @@ public class EmpController {
 //        return Result.success();
 //    }
 
+    @Log
     //todo 但为了更好的操作数据，企业一般会使用List<Integer>来接收id列表
     @DeleteMapping
     public Result delete(@RequestParam List<Integer> ids){
@@ -100,6 +103,7 @@ public class EmpController {
     /**
      * 修改员工
      * */
+    @Log
     @PutMapping
     public Result update(@RequestBody Emp emp) {
         log.info("修改员工update:{}", emp);
