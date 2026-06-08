@@ -25,5 +25,6 @@ export const deleteEmpApi = (ids) =>{
     return request.delete(`/emps?ids=${ids}`)
 }
 
-
+//查询所有员工
+export const queryAllApi = () => request.get(`/emps/list`)
 
